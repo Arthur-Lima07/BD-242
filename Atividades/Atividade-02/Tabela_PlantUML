@@ -1,0 +1,89 @@
+@startuml 
+
+entity TB_media_types {
+  * MediaTypeid: INTERGER
+  Name: NVARCHAR(120)
+}
+entity TB_genres{
+  * Genreid: INTERGER
+  Name: NVARCHAR(120)
+}
+entity TB_playlists{
+  * Playlistid: INTERGER
+  Name: NVARCHAR(120)
+}
+entity TB_playlist_track{
+  * Playlistid: INTERGER <<FK>>
+  * Trackid: INTERGER <<FK>>
+}
+entity TB_tracks{
+  * Trackid: INTERGER
+  Name: NVARCHAR(200)
+  Albumid: INTERGER <<FK>>
+  MediaTypeid: INTERGER <<FK>>
+  Genreid: INTERGER <<FK>>
+  Composer: NVARCHAR(220)
+  Milliseconds: INTERGER
+  Bytes: INTERGER
+  UnitPrice: NUMERIC
+}
+entity TB_artists{
+  * Artistid: INTERGER
+  Name: NVARCHAR(120)
+}
+entity TB_invoices{
+  * Invoiceid: INTERGER
+  Customerid: INTERGER <<FK>>
+  InvoiceData: DATETIME
+  BillingAdress: NVARCHAR
+  BillingCity: NVARCHAR
+}
+entity TB_invoices_items{
+  * Invoiceitemid: INTERGER
+  Invoiceid: INTERGER <<FK>>
+  Trackid: INTERGER <<FK>>
+  UnitPrice: NUMERIC
+  Quantity: INTERGER
+}
+entity TB_albums{
+  *Albumid: INTERGER
+  Tittle: NVARCHAR(160)
+  Artistid: INTERGER <<FK>>
+}
+entity TB_customers{
+  *Customerid: INTERGER
+  FirstName: NVARCHAR(40)
+  LastName: NVARCHAR(20)
+  Company: NVARCHAR(80)
+  Adress: NVARCHAR(70)
+  City: NVARCHAR(40)
+  State: NVARCHAR(40)
+  Country: NVARCHAR(40)
+  PostalCode: NVARCHAR(10)
+  Phone: NVARCHAR(24)
+  Fax: NVARCHAR(24)
+  Email: NVARCHAR(60)
+  SupportRepid: INTERGER
+}
+entity TB_employees{
+  *Employeeid: INTERGER
+  LastName: NVARCHAR(20)
+  FirstName: NVARCHAR(20)
+  Tittle: NVARCHAR(30)
+  ReportsTo: INTERGER
+  BirthDate: DATETIME
+  HireTime: DATETIME
+  Adress: NVARCHAR(70)
+} 
+TB_media_types ||--o{ TB_tracks
+TB_genres |o--o{ TB_tracks
+TB_playlists ||--o| TB_playlist_track
+TB_playlist_track |o--|| TB_tracks
+TB_artists ||--o{ TB_albums
+TB_tracks ||--o{ TB_invoices_items
+TB_tracks }o--o| TB_albums
+TB_invoices ||--o{ TB_invoices_items
+TB_invoices }|--|| TB_customers
+TB_customers }o--o| TB_employees
+TB_employees }o--o| TB_employees
+@enduml
