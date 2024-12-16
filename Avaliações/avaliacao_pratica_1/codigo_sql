@@ -1,0 +1,39 @@
+CREATE TABLE "TB_CURSO" (
+"id"    INTEGER,
+"descriçao"     STRING NOT NULL,
+PRIMARY KEY("id" AUTOINCREMENT)
+);
+CREATE TABLE "TB_PROFESSOR" (
+"id"    INTEGER,
+"nome"  VARCHAR(70) NOT NULL,
+ PRIMARY KEY("id" AUTOINCREMENT)
+ );
+ CREATE TABLE "TB_DISCIPLINA" (
+ "id"    INTEGER,
+ "descricao"     VARCHAR NOT NULL,
+ PRIMARY KEY("id" AUTOINCREMENT)
+ );
+ CREATE TABLE "TB_ALUNO" (
+ "id"    INTEGER,
+ "nome"  TEXT NOT NULL,
+ "curso_id"      INTEGER,
+  PRIMARY KEY("id"),
+  FOREIGN KEY("curso_id") REFERENCES "TB_CURSO"("id")
+  );
+  CREATE TABLE "TB_CURSO_DISCIPLINA" (
+  "id"    INTEGER,
+  "curso_id"      INTEGER,
+  "disciplina_id" INTEGER,
+   PRIMARY KEY("id" AUTOINCREMENT)
+   FOREIGN KEY("curso_id") REFERENCES "TB_CURSO"("id"),
+   FOREIGN KEY("disciplina_id") REFERENCES "TB_DISCIPLINA"("id")
+   );
+CREATE TABLE "TB_CURSO_PROFESSOR" (
+   "id"    INTEGER,
+   "data_ingresso" DATE NOT NULL,
+   "professor_id"  INTEGER,
+   "curso_id"      INTEGER,
+   PRIMARY KEY("id" AUTOINCREMENT),
+   FOREIGN KEY("curso_id") REFERENCES "TB_CURSO"("id"),
+   FOREIGN KEY("professor_id") REFERENCES "TB_PROFESSOR"("id")
+   );
